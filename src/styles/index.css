@@ -10,3 +10,13 @@
     import 'relative/path/to/stylesheet.scss';
 
 */
+body {
+    background-color: rgb(231, 171, 5);
+}
+.delete-button {
+    display: none;
+  }
+  
+  .list-group-item:hover .delete-button {
+    display: inline-block;
+  }
