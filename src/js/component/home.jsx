@@ -27,7 +27,7 @@ const Home = () => {
   const [listelements, setListelements] = useState([]);
 
   useEffect(() => {
-    fetch('https://playground.4geeks.com/todo/user/alesanchezr')
+    fetch('https://assets.breatheco.de/apis/fake/todos/user/carlsodaniel')
       .then(resp => resp.json())
       .then(data => {
         setListelements(data);
@@ -41,7 +41,7 @@ const Home = () => {
       setListelements(updatedList);
       setInput1("");
 
-      fetch('https://playground.4geeks.com/todo/user/alesanchezr', {
+      fetch('https://assets.breatheco.de/apis/fake/todos/user/carlsodaniel', {
         method: "PUT",
         body: JSON.stringify(updatedList),
         headers: {
@@ -58,7 +58,7 @@ const Home = () => {
     const updatedList = listelements.filter((_, idx) => idx !== index);
     setListelements(updatedList);
 
-    fetch('https://playground.4geeks.com/todo/user/alesanchezr', {
+    fetch('https://assets.breatheco.de/apis/fake/todos/user/carlsodaniel', {
       method: "PUT",
       body: JSON.stringify(updatedList),
       headers: {
@@ -73,7 +73,7 @@ const Home = () => {
   const handleClearAllTasks = () => {
     setListelements([]);
 
-    fetch('https://playground.4geeks.com/todo/user/alesanchezr', {
+    fetch('https://assets.breatheco.de/apis/fake/todos/user/carlsodaniel', {
       method: "PUT",
       body: JSON.stringify([]),
       headers: {
@@ -124,3 +124,4 @@ const Home = () => {
 };
 
 export default Home;
+
