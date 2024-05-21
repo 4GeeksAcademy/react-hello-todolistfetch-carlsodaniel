@@ -7,7 +7,7 @@ const TodoListItems = ({ listelements, handleDeleteTask }) => {
     return listelements.map((item, index) => (
       <li className="list-group-item" key={index}>
         <div className="row">
-          <div className="col-9">{item}</div>
+          <div className="col-9">{item.label}</div>
           <div className="col-3 d-flex justify-content-end">
             <button
               className="btn btn-link text-danger delete-button"
@@ -27,62 +27,78 @@ const Home = () => {
   const [listelements, setListelements] = useState([]);
 
   useEffect(() => {
-    fetch('https://assets.breatheco.de/apis/fake/todos/user/carlsodaniel')
-      .then(resp => resp.json())
-      .then(data => {
-        setListelements(data);
-      })
-      .catch(error => console.error('Error fetching data:', error));
+    fetchTodos();
   }, []);
 
-  const handleAddTask = () => {
+  const fetchTodos = async () => {
+    try {
+      const response = await fetch('https://playground.4geeks.com/todo/api/todos/user/carlsodaniel');
+      if (!response.ok) throw new Error('Network response was not ok');
+      const data = await response.json();
+      setListelements(data);
+    } catch (error) {
+      console.error('Error fetching todos:', error);
+    }
+  };
+
+  const handleAddTask = async () => {
     if (input1 !== "") {
-      const updatedList = [...listelements, input1];
+      const newTask = { label: input1, done: false };
+      const updatedList = [...listelements, newTask];
       setListelements(updatedList);
       setInput1("");
 
-      fetch('https://assets.breatheco.de/apis/fake/todos/user/carlsodaniel', {
+      try {
+        const response = await fetch('https://playground.4geeks.com/todo/api/todos/user/carlsodaniel', {
+          method: "PUT",
+          body: JSON.stringify(updatedList),
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+        if (!response.ok) throw new Error('Network response was not ok');
+        await response.json();
+      } catch (error) {
+        console.error('Error adding task:', error);
+      }
+    }
+  };
+
+  const handleDeleteTask = async (index) => {
+    const updatedList = listelements.filter((_, idx) => idx !== index);
+    setListelements(updatedList);
+
+    try {
+      const response = await fetch('https://playground.4geeks.com/todo/api/todos/user/carlsodaniel', {
         method: "PUT",
         body: JSON.stringify(updatedList),
         headers: {
           "Content-Type": "application/json"
         }
-      })
-        .then(resp => resp.json())
-        .then(data => console.log('Task added successfully:', data))
-        .catch(error => console.error('Error adding task:', error));
+      });
+      if (!response.ok) throw new Error('Network response was not ok');
+      await response.json();
+    } catch (error) {
+      console.error('Error deleting task:', error);
     }
   };
 
-  const handleDeleteTask = (index) => {
-    const updatedList = listelements.filter((_, idx) => idx !== index);
-    setListelements(updatedList);
-
-    fetch('https://assets.breatheco.de/apis/fake/todos/user/carlsodaniel', {
-      method: "PUT",
-      body: JSON.stringify(updatedList),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(resp => resp.json())
-      .then(data => console.log('Task deleted successfully:', data))
-      .catch(error => console.error('Error deleting task:', error));
-  };
-
-  const handleClearAllTasks = () => {
+  const handleClearAllTasks = async () => {
     setListelements([]);
 
-    fetch('https://assets.breatheco.de/apis/fake/todos/user/carlsodaniel', {
-      method: "PUT",
-      body: JSON.stringify([]),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-      .then(resp => resp.json())
-      .then(data => console.log('All tasks cleared successfully:', data))
-      .catch(error => console.error('Error clearing tasks:', error));
+    try {
+      const response = await fetch('https://playground.4geeks.com/todo/api/todos/user/carlsodaniel', {
+        method: "PUT",
+        body: JSON.stringify([]),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+      if (!response.ok) throw new Error('Network response was not ok');
+      await response.json();
+    } catch (error) {
+      console.error('Error clearing tasks:', error);
+    }
   };
 
   return (
