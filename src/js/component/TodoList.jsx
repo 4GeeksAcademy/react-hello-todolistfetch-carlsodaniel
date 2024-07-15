@@ -8,7 +8,7 @@ const TodoList = () => {
     const fetchData = async () => {
         try {
             const response = await fetch(
-                `https://playground.4geeks.com/apis/fake/todos/user/carlosdaniel236`
+                `https://assets.breatheco.de/apis/fake/todos/user/carlosdaniel236`
             );
             if (!response.ok) {
                 throw new Error('Failed to fetch data');
@@ -31,7 +31,7 @@ const TodoList = () => {
             setList(updatedList)
             try {
                 const response = await fetch(
-                    `https://playground.4geeks.com/apis/fake/todos/user/carlosdaniel236`,
+                    `https://assets.breatheco.de/apis/fake/todos/user/carlosdaniel236`,
                     {
                         method: 'PUT',
                         body: JSON.stringify(updatedList),
@@ -58,7 +58,7 @@ const TodoList = () => {
         setList(newList);
         try {
             const response = await fetch(
-                `https://playground.4geeks.com/apis/fake/todos/user/carlosdaniel236`,
+                `https://assets.breatheco.de/apis/fake/todos/user/carlosdaniel236`,
                 {
                     method: 'PUT',
                     body: JSON.stringify(newList),

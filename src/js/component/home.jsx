@@ -1,8 +1,7 @@
-import React from 'react'
-import TodoList from "./TodoList"
+import React from 'react';
+import TodoList from "./TodoList";
 
-
-const home = () => {
+const Home = () => {
     return (
         <div>
             <TodoList/>
@@ -10,4 +9,4 @@ const home = () => {
     )
 }
 
-export default home
+export default Home;
